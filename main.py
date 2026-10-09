@@ -4,8 +4,10 @@ and save favorite recipes for later viewing.
 """
 # Version 1 focuses on project setup and application structure.
 
-# Import Flask framework 
-from flask import Flask, render_template
+# Import Flask framework
+from flask import Flask, render_template, request 
+# Importing requests library to be able to call TheMealDB API and get recipe data 
+import requests
 
 app = Flask(__name__)
 
@@ -19,32 +21,15 @@ app = Flask(__name__)
 # - Return matching recipes
 # ---------------------------------------------------
 
-# Importing requests library to be able to call TheMealDB API and get recipe data
-import requests
-def search_recipes():
-    #Asking user for recipe name to search
-    recipe_name = input("Enter recipe name to search: ")
-    print(f"Searching for recipes matching: {recipe_name}")
+
+def search_recipes(recipe_name):
     
     # Making a request to TheMealDB API to search for recipes
     url = f"https://www.themealdb.com/api/json/v1/1/search.php?s={recipe_name}"
     response = requests.get(url)
     # Turn the response to JSON format
     data = response.json()
-    
-    # This if statement aims to check if the search input exists in the API response. 
-    # If it doesn't, it will print a message to the user telling no recipes were found.
-    if data['meals'] is None:
-        print("No recipes found for your search.")
-    # Else, if the search input exists in the API response, it will print the names 
-    # of the recipes found.
-    else:
-        # The for loop will look for the key 'meals' in the data and print only the 
-        # value of 'strMeal' for each meal found.
-        for meal in data['meals']:
-            print(meal['strMeal'])
-
-#search_recipes()
+    return data ["meals"]
 
 # ==================================================
 # BLOCK 2: RECIPE DETAILS PAGE
@@ -77,9 +62,14 @@ def save_recipe():
 def get_saved_recipes():
     pass
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("index.html")
+    meals = []
+    if request.method == "POST":
+        recipe_name = request.form["recipe_name"]
+        print(f"Searching for recipes matching: {recipe_name}")
+        meals = search_recipes(recipe_name)
+    return render_template("index.html", meals=meals)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=5001)
