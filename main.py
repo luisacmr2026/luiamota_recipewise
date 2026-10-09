@@ -5,7 +5,7 @@ and save favorite recipes for later viewing.
 # Version 1 focuses on project setup and application structure.
 
 # Import Flask framework 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -41,13 +41,13 @@ def search_recipes():
     else:
         # The for loop will look for the key 'meals' in the data and print only the 
         # value of 'strMeal' for each meal found.
-        for meals in data['meals']:
-            print(meals['strMeal'])
+        for meal in data['meals']:
+            print(meal['strMeal'])
 
-search_recipes()
+#search_recipes()
 
 # ==================================================
-# BLOCK 2: RECIPE DETAILS
+# BLOCK 2: RECIPE DETAILS PAGE
 # ==================================================
 # Functionality:
 # - Display selected recipe
@@ -79,7 +79,7 @@ def get_saved_recipes():
 
 @app.route("/")
 def home():
-    return "RecipeWise: Work in Progress Part 1!"
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
