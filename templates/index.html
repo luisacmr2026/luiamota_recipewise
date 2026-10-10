@@ -12,7 +12,12 @@
     </form>
     
     {% for meal in meals %}
-       <li> {{meal["strMeal"]}} </li>
+        <div>
+            <h3> {{meal["strMeal"]}} </h3>
+            <img src="{{meal["strMealThumb"]}}" alt="{{meal["strMeal"]}}" width="200">
+            <p> Country: {{meal["strArea"]}} </p>
+        </div>
+         <hr>
     {% endfor %}    
 
 </body>
