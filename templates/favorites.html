@@ -47,8 +47,14 @@ When a user clicks the Save Recipe button, the application displays:
     <h4> You have {{favorites_count}} recipe(s) saved</h4>
 
     {% if message%}
-    <div class="message">
+    <div class="notification notification-{{ message_type }}">
+        <img 
+        src="{{ url_for('static', filename=message_type ~ '.svg') }}"
+        alt=""
+        class="notification-icon">
+        <span>
         {{message}}
+        </span>
     </div>
     {% endif %}
 
