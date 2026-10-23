@@ -64,26 +64,29 @@ When a user clicks the Save Recipe button, the application displays:
         <a href="/">Make a Search</a>
     {% endif %}
 
-    {% for recipe in favorites %}
-        <div class="recipe-card">
-            <h3>
-                <a href="/recipe/{{recipe["idMeal"]}}">
-                    {{recipe["strMeal"]}} 
-                </a>
-            </h3>
-            <img src="{{recipe["strMealThumb"]}}" alt="{{recipe["strMeal"]}}" width="200">
-            <p><b>Country:</b> {{recipe["strArea"]}}</p>
-        </div>
-        <form action="/favorites/remove//{{recipe["idMeal"]}}" method="POST">
-        <button class="btn-destructive" type="submit" > 
-             <img 
-                src = "{{ url_for ('static', filename='delete.svg')}}"
-                alt=" "
-                class="button-icon">
-            Remove from Favorites 
-        </button>
-    </form>
-    {% endfor %}
-    
+    <div class="recipe-grid"> 
+        {% for recipe in favorites %}
+            <div class="recipe-card">
+                <h3>
+                    <a href="/recipe/{{recipe["idMeal"]}}">
+                        {{recipe["strMeal"]}} 
+                    </a>
+                </h3>
+                <img src="{{recipe["strMealThumb"]}}" alt="{{recipe["strMeal"]}}" width="200">
+                <p><b>Country:</b> {{recipe["strArea"]}}</p>
+                <form action="/favorites/remove//{{recipe["idMeal"]}}" method="POST">
+                    <button class="btn-destructive" type="submit" > 
+                        <img 
+                            src = "{{ url_for ('static', filename='delete.svg')}}"
+                            alt=" "
+                            class="button-icon">
+                        Remove from Favorites 
+                    </button>
+                </form>
+            
+            </div>
+            
+        {% endfor %}
+    </div>
 </body>
 </html>
