@@ -281,9 +281,7 @@ nav a:hover{
     height: 20px;
     flex-shrink: 0;
     color: inherit;
-
 }
-
 .notification-success{
     background-color: var(--success-50);
     color: var(--success-800);
@@ -303,7 +301,20 @@ nav a:hover{
 .recipe-card {
     background-color: var(--background-cards);
     border-radius: var(--radius-m);
-    padding: var(--space-l);
     border:1px solid var(--gray-400);
+    
+    padding: var(--space-xl);
     margin-bottom: var(--space-l); 
+    width: 350px;
+}
+.recipe-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+}
+
+
+/* SEARCH FORM */
+.search-form {
+    margin-bottom: 48px;
 }
