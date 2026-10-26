@@ -1,4 +1,6 @@
-/* */
+/* 
+
+*/
 
 body {
     font-family: Alan Sans, sans-serif;
@@ -20,14 +22,14 @@ body {
 
     margin-top: 120px;
 }
-/* LOGO */
+
+/* ------------------------ LOGO ------------------------- */
 .logo {
     width: 500px;
     height: auto;
     margin-bottom: 32px;
 }
-
-/* SEARCH */
+/* ------------------------ SEARCH ------------------------- */
 .search-form {
     display: flex;
     gap: 12px;
@@ -47,13 +49,14 @@ body {
     
     font-size: var(--body-medium-size);
     line-height: var(--body-medium-line-height);
-    
 }
 
-/* TYPOGRAPHY*/
+/* ------------------------ DESIGN SYSTEM ------------------------- */
+/* ------------------------     Tokens    ------------------------- */
 
+/* TYPOGRAPHY*/
 :root{
-    /* Headings Size*/
+    /* Headings*/
     --h1-size: 36px;
     --h1-line-height:40px;
 
@@ -67,7 +70,6 @@ body {
     --h4-line-height: 26px;
 
     /* Body Sizes */
-    
     --body-large-size: 18px; 
     --body-large-line-height: 28px;
     
@@ -83,8 +85,7 @@ body {
     --weight-regular: 400;
 }
 
-/* COLORS */
-/* Might need to have a gray scale or at least a darket and lighter versio for text primary*/
+/* COLOR */
 :root {
     --background-primary: #FAFAFC;
     --background-cards: #FFFFFF;
@@ -101,8 +102,8 @@ body {
 
    /* Decorative Colors */
     --primary-800:#092A1D;
-    --primary-600:#22AA74;
-    --primary-400: #104F36 ;
+    --primary-600: #104F36 ;
+    --primary-400:#22AA74;
     --primary-200: #AAEED3;
     
     --secondary-600:#AF2F1D;
@@ -145,16 +146,18 @@ body {
     --radius-m: 12px;
     --radius-s:8px;
 }
+/* ------------------------ Components ------------------------- */
 
 /* NAVIGATION BAR */
- nav {
-    /*Keep the top-nav bar stick on top when the user scrolls. 
+ nav { /*  Top-nav behavior */
+    /* To Keep the top-nav bar stick on top when the user scrolls. 
     Keeping the top-nav bar always visible (better ux)*/
     position: sticky;
     top: 0;
     z-index: 1000;
     width: 100%;
 
+    /* Glass Effect to the top-nav bar */
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -162,7 +165,7 @@ body {
     border-bottom: 0.5px solid var(--gray-200);
     box-shadow: 0 2px 8px #262829(0, 0, 0, 0.04);
 }
-.nav-container {
+.nav-container { /* Top-nav container (size and margins) */
     max-width: 1200px;
     margin: 0 auto;
     padding: 32px 64px;
@@ -173,7 +176,7 @@ body {
     gap: 24px;
 }
 
-nav a {
+nav a { /* Top-nav tabs style */
     color: var(--primary-800);
 
     text-decoration: none;
@@ -184,13 +187,29 @@ nav a {
     transition: 0.2s ease;
 }
 
-nav a:hover{
-    color: var(--secondary-400);
+nav a:hover{ /* Top-nav tabs hover interaction */
+    color: var(--secondary-600);
 }
-.nav-link-active {
-    color: var(--secondary-400);
+.nav-link-active { /* Top-nav tabs active state visuals */
+    color: var(--secondary-600);
 }
 
+/* Tab-Icon (heart.svg for the Favorites Tab) */
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    fill: currentColor;
+} 
+.nav-link:hover .nav-icon {
+    transform: scale(1.1);
+    color: var(--secondary-600);
+}
+
+.nav-link:active .nav-icon {
+    color: var(--secondary-600);
+}
+/* Top-nav Logo (size, navigation, hover state) */
 .nav-logo{
     height: 40px;
     width: auto;
@@ -199,18 +218,27 @@ nav a:hover{
     transform: scale(1.03);
 }
 .nav-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
+    position: relative;
+    width: fit-content;
 }
-.nav-icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.2s ease;
-} 
-.nav-link:hover .nav-icon {
-    transform: scale(1.1);
-    color: var(--secondary-400);
+.nav-link-active::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+
+    height: 4px;
+
+    background-color: var(--accent-color);
+    border-radius: 10px;
+}
+.nav-link:hover::after,
+.nav-link-active::after {
+    width: 110%;
 }
 
 
@@ -307,6 +335,8 @@ nav a:hover{
     color: var(--error-600);
     border: 1px solid  var(--error-500);
 }
+
+
 /* RECIPE CARDS - Search Result List*/
 .recipe-card {
     background-color: var(--gray-100);
