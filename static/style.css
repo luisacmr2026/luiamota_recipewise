@@ -307,7 +307,7 @@ nav a:hover{
     color: var(--error-600);
     border: 1px solid  var(--error-500);
 }
-/* RECIPE CARDS*/
+/* RECIPE CARDS - Search Result List*/
 .recipe-card {
     background-color: var(--gray-100);
     border-radius: var(--radius-m);
@@ -319,8 +319,15 @@ nav a:hover{
 
     display: flex;
     flex-direction: column;
+    
+    position: relative;
+    cursor: pointer;
 }
-
+.card-link{ /* Makes Cards Clickable*/
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
 .recipe-card:hover{
      box-shadow: 0 8px 24px rgba(0,0,0,.12);
 }
@@ -366,7 +373,7 @@ nav a:hover{
     
     border: 1px solid rgba(255, 255, 255, 0.3);;
     border-radius: 50%;
-
+    /* glass style*/
     background: rgba(9, 42, 29, 0.50);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -378,6 +385,8 @@ nav a:hover{
         display: flex;
     align-items: center;
     justify-content: center;
+
+    z-index: 2;
 }
 
 .favorite-btn img {
