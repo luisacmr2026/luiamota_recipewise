@@ -13,6 +13,7 @@ This page displays:
 ================================================== -->
 <!DOCTYPE html>
 <html>
+
 <header>
     <title>Recipe Details</title>
     <link rel="stylesheet"
@@ -20,6 +21,7 @@ This page displays:
 </header>
 
 <body> 
+<!-- Top Navigation Bar--> 
     <nav>
         <div class="nav-container">
             <a href="/" class="nav-logo-link">
@@ -36,34 +38,55 @@ This page displays:
                 Favorites
             </a>
     </nav>
-
-
-    <h1>Recipe Details Page</h1>
-    <h2> Recipe: {{recipe["strMeal"]}} </h2>
-    <form action="/favorites/add//{{recipe["idMeal"]}}" method="POST">
-        <button class="btn-primary" type="submit" > 
-             <img 
-                src = "{{ url_for ('static', filename='heart-empty.svg')}}"
-                alt=" "
-                class="button-icon">
-            Add to Favorites 
-        </button>
-    </form>
     
-    <img src="{{recipe["strMealThumb"]}}" alt="{{recipe["strMeal"]}}" width="200">
-    <h3>Ingredients:</h3>
-    <ul>
-        {% for ingredient in ingredients %}
-            <li>{{ ingredient }}</li>
-        {% endfor %}
-    </ul>
+<!-- Page Content --> 
+    <main class= "page-container">
+            <div class="recipe-layout">
+                <div class="recipe-media">
+                    <img 
+                        src="{{recipe["strMealThumb"]}}" 
+                        alt="{{recipe["strMeal"]}}" 
+                        class="recipe-detail-image">
+                </div>
 
-    <h3>Instructions:</h3>
-        <ul>
-        {% for step in instructions %}
-            <li>{{ step }}</li>
-        {% endfor %}
-        </ul>
-   
+                <div class="recipe-info">
+                    <div class="recipe-header">
+
+                        <div class="recipe-meta">
+                            <h1> {{ recipe["strMeal"]}}</h1>
+                            <h2 class="recipe-country">
+                                Country: {{ recipe ["strArea"]}}
+                            </h2>
+                        </div>    
+                    <form action="/favorites/add//{{recipe['idMeal']}}" method="POST">
+                        <button class="btn-primary" type="submit">
+                            <img
+                                src = "{{ url_for ('static', filename='heart-empty.svg')}}"
+                                alt="Add to Favorite"
+                                class="button-icon">
+                            Add to Favorites
+                        </button>
+                    </form>
+            </div>
+            
+            <h3> Ingridients: </h3>
+
+            <ul>
+                {% for ingredient in ingredients %}
+                    <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+            </div>
+            
+            <div class="recipe-instructions">
+                <h2>Instructions:</h2>
+                    <ul>
+                        {% for step in instructions %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ul>
+             </div>
+    </main>
+
 </body>
 </html>
