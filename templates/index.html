@@ -18,7 +18,7 @@ Serves as the main entry point of RecipeWise.
       href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-
+<!-- Top Navigation Bar--> 
 <body> 
     <nav>
         <div class="nav-container">
@@ -37,59 +37,78 @@ Serves as the main entry point of RecipeWise.
         </div>
     </nav>
 
-    <div class="hero">
-        <img
-            src="{{ url_for('static', filename='logo.svg') }}"
-            alt="RecipeWise Logo"
-            class="logo">
+<!-- Page Content -->  
+    <main class="page-container">
+        <div class="hero {% if recipe_count > 0 %}hero-results{% endif %}"> <!-- AI Assistance -->
+            {% if not meals %}
+                <img
+                    src="{{ url_for('static', filename='logo.svg') }}"
+                    alt="RecipeWise Logo"
+                    class="logo"> 
+            {% endif %}
+            <form class="search-form" method= "POST">
+                <input 
+                class="search-input"
+                type="text"
+                name="recipe_name" 
+                placeholder="Search for a recipe">
+                
+                <button class="btn-primary" type="submit"> 
+                    <img 
+                    src = "{{ url_for ('static', filename='search.svg')}}"
+                    alt=" "
+                    class="button-icon">
+                    Search
+                </button>
+            </form>
+        </div>
+    
+        <div class = "results-selection"> 
+            {% if recipe_count > 0 %}
+                <p class = "results-count">
+                    {{ recipe_count }} matching recipes found containing "{{ recipe_name }}".
+                </p>
+            {% endif%}
+            <div class="recipe-grid"> 
+                    {% for meal in meals %}
+                        <!-- ==================================================
+                            Add note AI assistance  
+                        ================================================== -->
+                        <div class="recipe-card">
+                            <a href="/recipe/{{meal['idMeal']}}" class="card-link"></a>
 
-        <form class="search-form" method= "POST">
-            <input 
-            class="search-input"
-            type="text"
-            name="recipe_name" 
-            placeholder="Search for a recipe">
-            
-            <button class="btn-primary" type="submit"> 
-                <img 
-                src = "{{ url_for ('static', filename='search.svg')}}"
-                alt=" "
-                class="button-icon">
-                Search
-            </button>
-        
-        </form>
-    </div>
-   <div class="recipe-grid"> 
-        {% for meal in meals %}
-        <!-- ==================================================
-            Add note AI assistance  
-        ================================================== -->
-            <div class="recipe-card">
-                <a href="/recipe/{{meal['idMeal']}}" class="card-link"></a>
+                            <div class="recipe-image-container">
+                                <img src="{{meal["strMealThumb"]}}" alt="{{meal["strMeal"]}}" width="200">
+                                
+                                <form action="/favorites/add/{{ meal ['idMeal'] }}" method = "POST">
+                                    <button class="favorite-btn" type="submit" > 
+                                        {% if meal ['idMeal'] in favorites_ids %}
+                                            <img 
+                                                src = "{{ url_for ('static', filename='heart-full-red.svg')}}"
+                                                alt=" Favorited">
+                                        {% else %}
+                                            <img 
+                                                    src = "{{ url_for ('static', filename='heart-empty.svg')}}"
+                                                    alt=" Favorited">
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            </div>
 
-                <div class="recipe-image-container">
-                    <img src="{{meal["strMealThumb"]}}" alt="{{meal["strMeal"]}}" width="200">
-                    
-                    <button class="favorite-btn" > 
-                        <img 
-                            src = "{{ url_for ('static', filename='heart-empty.svg')}}"
-                            alt=" Favorite">
-                    </button>
+                            <div class="recipe-content">
+                                <h2 class="recipe-title">
+                                    {{meal["strMeal"]}}
+                                </h2>
+
+                                <p class="recipe-country">
+                                    <b> {{meal["strArea"]}} </b>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}    
                 </div>
-
-                <div class="recipe-content">
-                    <h3 class="recipe-title">
-                            {{meal["strMeal"]}}
-                    </h3>
-
-                    <p class="recipe-country">
-                        <b>Country:</b> {{meal["strArea"]}}
-                    </p>
-                </div>
-            </div>
-        {% endfor %}    
-    </div>
+        </div>
+    </main> 
 </body>
 </html>
 

@@ -54,16 +54,26 @@ This page displays:
                         <div class="recipe-meta">
                             <h1> {{ recipe["strMeal"]}}</h1>
                             <h2 class="recipe-country">
-                                Country: {{ recipe ["strArea"]}}
+                                {{ recipe ["strArea"]}}
                             </h2>
                         </div>    
                     <form action="/favorites/add//{{recipe['idMeal']}}" method="POST">
-                        <button class="btn-primary" type="submit">
-                            <img
-                                src = "{{ url_for ('static', filename='heart-empty.svg')}}"
-                                alt="Add to Favorite"
-                                class="button-icon">
-                            Add to Favorites
+                            {% if recipe ['idMeal'] in favorite_ids %}
+                                <button class="btn-primary" type="submit">
+                                <img
+                                    src = "{{ url_for ('static', filename='heart-full-red.svg')}}"
+                                    alt="Favorited"
+                                    class="button-icon">
+                                Saved in Favorites
+                            {% else %}
+                                <button class="btn-secondary" type="submit">
+                                <img
+                                        src = "{{ url_for ('static', filename='heart-empty.svg')}}"
+                                        alt="Add to Favorite"
+                                        class="button-icon">
+                                    Add to Favorites
+                            {% endif %}
+
                         </button>
                     </form>
             </div>

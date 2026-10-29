@@ -156,15 +156,33 @@ def get_saved_recipes():
 @app.route("/", methods=["GET", "POST"])
 def home():
     meals = []
+    recipe_count = 0 
+    recipe_name = ""
+    
     if request.method == "POST":
-        recipe_name = request.form["recipe_name"]
+        recipe_name = request.form["recipe_name"] 
+            
         print(f"Searching for recipes matching: {recipe_name}")
+        
         meals = search_recipes(recipe_name)
+        recipe_count = len(meals)
+    
+    favorites_recipes = (
+        supabase.table ("favorites")
+        .select("idMeal")
+        .execute ()
+    )
+    favorites_ids = {
+        recipe ["idMeal"]
+        for recipe in favorites_recipes.data
+    }
     return render_template(
         "index.html", 
-        meals=meals
-        )
-
+        meals=meals,
+        recipe_count=recipe_count,
+        recipe_name=recipe_name,
+        favorites_ids=favorites_ids
+    )
 # ---------------------------------------------------
 # RECIPE DETAILS ROUTE (recipe_details.html)
 # ---------------------------------------------------
@@ -195,12 +213,22 @@ def recipe_details(meal_id):
         # Only add the ingredient if it is not empty
         if ingredient and ingredient.strip():
             ingredients.append(f"{measure} {ingredient}")
-    
+    #
+    favorite_recipes = (
+        supabase.table("favorites")
+        .select ("idMeal")
+        .execute()
+    )
+    favorite_ids = {
+        str(recipe["idMeal"])
+        for recipe in favorite_recipes.data
+    }
     return render_template(
         "recipe_details.html", 
         recipe=recipe, 
         instructions=instructions,
-        ingredients=ingredients
+        ingredients=ingredients,
+        favorite_ids=favorite_ids
         )
 
 # ---------------------------------------------------
@@ -217,7 +245,7 @@ def favorites_page():
         )
     favorites = response.data
     favorites_count = len(favorites)
-        
+       
     return render_template(
         "favorites.html", 
         favorites=favorites,
