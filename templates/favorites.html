@@ -75,7 +75,7 @@ When a user clicks the Save Recipe button, the application displays:
                         <div class="recipe-image-container">
                             <img src="{{meal["strMealThumb"]}}" alt="{{meal["strMeal"]}}" width="200">
                         </div>
-                        <form action="/favorites/add/{{ meal ['idMeal'] }}" method = "POST">
+                        <form action="/favorites/remove/{{ meal ['idMeal'] }}" method = "POST">
                             <button class="favorite-btn" type="submit" > 
                                     <img 
                                         src = "{{ url_for ('static', filename='heart-full-red.svg')}}"

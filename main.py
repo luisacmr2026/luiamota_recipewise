@@ -276,6 +276,7 @@ def add_favorites(meal_id):
 @app.route("/favorites/remove/<int:meal_id>", methods=["POST"])
 def remove_favorites(meal_id):
     message = "Recipe removed successfully."
+    message_type = "success"
     # Removing the recipe from Supabase fav table
     response = (
         supabase.table("favorites")
@@ -295,6 +296,7 @@ def remove_favorites(meal_id):
         "favorites.html",
         favorites=favorites, 
         message=message,
+        message_type=message_type,
         favorites_count=favorites_count
     )
 
